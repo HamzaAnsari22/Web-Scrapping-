@@ -1,0 +1,100 @@
+{% extends 'login/base_template.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+
+{% block content %}
+
+<script src="{% static 'login/main.js' %}"> </script>
+
+<div class="page-content p-5" id="content">
+
+<!-- Toggle Button  -->
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill
+    shadow-sm px-4 md-4"> <i class="fa fa-bars mr-2"> </i> <small class="text-uppercase font-weight-bold">
+     Toggle </small>  </button>
+
+    <a href="{% url 'logout' %}" class="btn btn-light bg-grey rounded-pill
+    shadow-sm px-4 md-4" style="float:right">
+    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+
+    <div class="col-md-6 col-md-offset-6">
+      <center>  <legend> Add New SKU </legend> </center>
+        <form method="POST" onsubmit="return validation()" action="{% url 'sku_setting_save' %}" style="padding:25px;">
+
+            {% csrf_token %}
+
+               <div class="card-body">
+
+                   <div class="form-group">
+                    <label>Timer</label>
+                    <input type="number" class="form-control" placeholder="timer" name="timer" value="5">
+                  </div>
+
+                   <div class="form-group">
+                    <label>UAE Buy Box</label>
+                    <input type="text" class="form-control" placeholder="uae buy box" name="uae_box" id="uae_box">
+                       <span id="s_uae_box" class="text-danger"> </span>
+                  </div>
+
+                  <div class="form-group">
+                    <label>UAE Buy Box Price</label>
+                    <input type="text" class="form-control" placeholder="uae buy box price" name="uae_box_price" id="uae_box_price">
+                      <span id="s_uae_box_price" class="text-danger"> </span>
+                  </div>
+
+                   <div class="form-group">
+                    <label>KSA Buy Box</label>
+                    <input type="text" class="form-control" placeholder="ksa buy box" name="ksa_box">
+                  </div>
+
+                   <div class="form-group">
+                    <label>KSA Buy Box Price</label>
+                    <input type="text" class="form-control" placeholder="ksa buy box price" name="ksa_box_price">
+                  </div>
+
+            <div class="card-footer">
+                 <button type="submit" class="btn btn-primary btn-block">Search</button>
+             </div>
+               </div>
+        </form>
+
+
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block custom_js %}
+<script>
+
+    function validation(){
+    var ubox = document.getElementById('uae_box').value;
+    var uprice = document.getElementById('uae_box_price').value;
+
+    if (ubox == "")
+        {
+            document.getElementById('s_uae_box').innerHTML = "** Please enter uae box";
+            console.log(ubox);
+            return false;
+        }
+        else {
+            document.getElementById('s_uae_box').innerHTML = "";
+        }
+
+    if (uprice == "")
+        {
+            document.getElementById('s_uae_box_price').innerHTML = "** Please enter url";
+            return false;
+            console.log(uprice);
+        }
+    else {
+            document.getElementById('s_uae_box_price').innerHTML = "";
+
+        }
+
+}
+
+</script>
+
+{% endblock custom_js %}

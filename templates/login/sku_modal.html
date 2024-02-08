@@ -1,0 +1,163 @@
+{% extends 'login/base_template.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+
+{% block content %}
+
+<script src="{% static 'login/main.js' %}"> </script>
+
+<div class="page-content p-5" id="content">
+
+<!-- Toggle Button  -->
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-grey rounded-pill
+    shadow-sm px-4 md-4"> <i class="fa fa-bars mr-2"> </i> <small class="text-uppercase font-weight-bold">
+     Toggle </small>  </button>
+
+    <a href="{% url 'logout' %}" class="btn btn-light bg-grey rounded-pill
+    shadow-sm px-4 md-4" style="float:right">
+    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+
+
+    <div class="col-md-6 col-md-offset-6">
+      <center>  <legend> Add New SKU </legend> </center>
+        <form onsubmit="return validation()" action="{% url 'sku_save' %}" method="post" style="padding:25px;">
+
+            {% csrf_token %}
+
+               <div class="card-body">
+
+                     <div class="form-group">
+
+                         <label>Select Country </label>
+
+                        <select name="country" class="form-control" id="country">
+
+                            <option value="uae"> UAE  </option>
+                            <option value="ksa"> KSA  </option>
+
+                            </select>
+                  </div>
+
+                   <div class="form-group">
+                    <label>Dali Ref</label>
+                    <input type="text" class="form-control" placeholder="dali ref" name="dali_ref" id="dali_ref">
+                  </div>
+
+                   <div class="form-group">
+                    <label>SKU ID</label>
+                    <input type="text" class="form-control" placeholder="sku id" name="sku_id" id="sku_id" autocomplete="off">
+                        <span id="s_sku_id" class="text-danger font-weight-normal"> </span>
+                   </div>
+
+                  <div class="form-group">
+                    <label>SKU URL</label>
+                    <input type="text" class="form-control" placeholder="sku url" name="sku_url" id="sku_url">
+                      <span id="s_sku_url" class="text-danger"> </span>
+                  </div>
+
+                    <div class="form-group">
+                    <label>Catalog</label>
+                    <input type="text" class="form-control" placeholder="catalog" name="catalog">
+                  </div>
+
+                    <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" placeholder="title" name="title" id="title">
+                        <span id="s_sku_title" class="text-danger"> </span>
+
+                  </div>
+
+                    <div class="form-group">
+                    <label>Platform %</label>
+                    <input type="text" class="form-control" placeholder="platform %" name="platform" id="platform">
+                           <span id="s_sku_per" class="text-danger"> </span>
+                  </div>
+                    <div class="form-group">
+                    <label>Min Price</label>
+                    <input type="text" class="form-control" placeholder="min price" name="min_price">
+                  </div>
+                    <div class="form-group">
+                    <label>Max price</label>
+                    <input type="text" class="form-control" placeholder="max price" name="max_price">
+                  </div>
+                     <div class="form-group">
+                    <label>Unit Cost</label>
+                    <input type="text" class="form-control" placeholder="unit cost" name="unit_cost">
+                  </div>
+                     <div class="form-group">
+                    <label>Note</label>
+                         <textarea class="form-control" placeholder="note" name="note"> </textarea>
+                  </div>
+
+                </div>
+
+            <div class="card-footer">
+                 <button type="submit" class="btn btn-primary btn-block">Search</button>
+             </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% endblock content %}
+
+
+{% block custom_js %}
+<script>
+
+    function validation(){
+    var id = document.getElementById('sku_id').value;
+    var url = document.getElementById('sku_url').value;
+    var title = document.getElementById('title').value;
+    var per = document.getElementById('platform').value;
+
+    if (id == "")
+        {
+            document.getElementById('s_sku_id').innerHTML = "** Please enter id";
+            console.log(id);
+            return false;
+        }
+        else {
+            document.getElementById('s_sku_id').innerHTML = "";
+            console.log(id);
+        }
+
+    if (url == "")
+        {
+            document.getElementById('s_sku_url').innerHTML = "** Please enter url";
+            return false;
+        }
+        else {
+            document.getElementById('s_sku_url').innerHTML = "";
+            console.log(url);
+        }
+
+    if (title == "")
+        {
+            document.getElementById('s_sku_title').innerHTML = "** Please enter title";
+            return false;
+        }
+        else {
+            document.getElementById('s_sku_title').innerHTML = "";
+            console.log(title);
+        }
+
+    if (per == "")
+        {
+            document.getElementById('s_sku_per').innerHTML = "** Please enter platform %";
+            return false;
+        }
+        else {
+            document.getElementById('s_sku_per').innerHTML = "";
+            console.log(per);
+        }
+    }
+
+</script>
+
+{% endblock custom_js %}
+

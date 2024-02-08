@@ -1,0 +1,101 @@
+{% extends 'login/base_template.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+
+{% block content %}
+<style>
+
+    table {
+    display: block;
+    overflow: scroll;
+}
+</style>
+
+  <script src="{% static 'login/main.js' %}"> </script>
+
+<div class="page-content p-5" id="content">
+
+<!-- Toggle Button  -->
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill
+    shadow-sm px-4 md-4"> <i class="fa fa-bars mr-2"> </i> <small class="text-uppercase font-weight-bold">
+     Toggle </small>  </button>
+
+    <a href="{% url 'logout' %}" class="btn btn-light bg-grey rounded-pill
+    shadow-sm px-4 md-4" style="float:right">
+    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+
+<form action="{% url 'search' %}" method="">
+    <div class="form-group">
+
+    <select id="country" name="keyword" class="form-control border border-dark mt-2">
+    <option value="uae"> UAE </option>
+    <option value="ksa"> KSA </option>
+    </select>
+
+    <button class="btn btn-block button-theme btn-md mt-4">
+      <i class="fa fa-search"></i> Search  </button>
+
+    </div>
+</form>
+
+    <section class="mt-4">
+        <div class="table-responsive col-lg-12 col-lg-8 col-lg-6 col-lg-4 col-md-4 col-md-6 col-md-8 col-md-12 col-sm-4 col-sm-6 col-sm-8 col-sm-12">
+            <table class="table table-light table-striped table-hover table-borderless">
+                <thead class="table-dark">
+                    <tr>
+
+                        <th scope="col">Country </th>
+                        <th scope="col">Dali Ref</th>
+                        <th scope="col">SKU ID</th>
+                        <th scope="col">SKU URL</th>
+                        <th scope="col">Catalog</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Platform %</th>
+                        <th scope="col">Min Price</th>
+                        <th scope="col">Max Price</th>
+                        <th scope="col">Unit Cost</th>
+                        <th scope="col">Note</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Update</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+               {% for val in Sku_View %}
+  <tr>
+
+<!--      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.id }} </td>-->
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.country }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.dali_ref }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.sku_id }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.sku_url }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.catalog }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.title }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.percent }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.min_price }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.max_price }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.unit_cost }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.note }} </td>
+      <td scope="row" class="col-lg-6 col-sm-12"> {{ val.date }} </td>
+
+      <th scope="row" class="col-lg-6 col-sm-12"> <form action="{% url 'update_data' val.id %}" method="post">
+          {% csrf_token %}
+       <input type="submit" value="update" class="btn btn-warning"> </form> </th>
+
+
+      <th class="col-lg-6 col-sm-12"> <form action="{% url 'delete_data' val.id %}" method="post">
+          {% csrf_token %}
+      <input type="submit" value="delete" class="btn btn-danger"> </form> </th>
+
+  </tr>
+
+      {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+{% endblock content %}

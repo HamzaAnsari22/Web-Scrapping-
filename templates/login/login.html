@@ -1,0 +1,36 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+
+{% block content %}
+
+<center>
+    <div class="col-md-4 col-md-offset-4" style="margin-top:80px;">
+        <legend style="color:grey;"> LOGIN </legend>
+        <form method="POST" class="border" style="padding:25px;">
+
+            {% csrf_token %}
+            <fieldset style="padding:10px;">
+
+               {% bootstrap_form form %}
+
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+        <div class="g-recaptcha" data-sitekey="6LcKg7sdAAAAANLsYh7pJTiFI5MgTBSXw2b_jqPG"></div>
+
+
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Login</button>
+            </div>
+
+            <small class="text-muted ml-2">
+                    <a href="{% url 'password_reset' %}"> Forget Password? </a>
+                </small>
+
+        </form>
+
+
+       </div>
+
+</center>
+
+{% endblock content %}

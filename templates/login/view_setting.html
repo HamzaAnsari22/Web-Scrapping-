@@ -1,0 +1,88 @@
+{% extends 'login/base_template.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+
+{% block content %}
+<style>
+
+    table {
+    display: block;
+    overflow: scroll;
+}
+</style>
+
+
+  <script src="{% static 'login/main.js' %}"> </script>
+
+<div class="page-content p-5" id="content">
+
+<!-- Toggle Button  -->
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill
+    shadow-sm px-4 md-4"> <i class="fa fa-bars mr-2"> </i> <small class="text-uppercase font-weight-bold">
+     Toggle </small>  </button>
+
+    <a href="{% url 'logout' %}" class="btn btn-light bg-grey rounded-pill
+    shadow-sm px-4 md-4" style="float:right">
+    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+
+
+<section class="mt-4">
+        <div class="table-responsive col-lg-12 col-lg-8 col-lg-6 col-lg-4 col-md-4 col-md-6 col-md-8 col-md-12 col-sm-4 col-sm-6 col-sm-8 col-sm-12">
+            <table class="table table-light table-striped table-hover table-borderless">
+                <thead class="table table-bordered">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">SKU Id</th>
+      <th scope="col">SKU Url</th>
+      <th scope="col">Title</th>
+      <th scope="col">Catalog</th>
+      <th scope="col">Buy Box Seller</th>
+      <th scope="col">Buy Box Price</th>
+      <th scope="col">ROI</th>
+      <th scope="col">ROI %</th>
+
+
+    </tr>
+  </thead>
+  <tbody id="display">
+
+
+  </tbody>
+</table>
+            </div>
+    </section>
+
+</div>
+
+{% endblock content %}
+
+{% block custom_js %}
+
+<script>
+var timer;
+
+$(document).ready(function(){
+
+      $.ajax({
+        type: 'GET',
+        url : "{% url "view_setting_ajax" %}",
+        success: function(response) {
+        console.log(response)
+        $("#display").empty();
+        for (var key in response.Sku_Setting)
+        {
+            var temp = "<tr> <td scope='row'>"+response.Sku_Setting[key][0]+" </td> <td scope='row'>"+response.Sku_Setting[key][1][0]+" </td> <td scope='row'>"+response.Sku_Setting[key][1][1]+" </td> <td scope='row'>"+response.Sku_Setting[key][1][2]+" </td> <td scope='row'>"+response.Sku_Setting[key][1][3]+" </td> <td scope='row'>"+response.Sku_Setting[key][3][0]+" </td> <td scope='row'>"+response.Sku_Setting[key][3][1]+" </td> <td scope='row'> "+response.Sku_Setting[key][3][2]+" </td> <td scope='row'> "+response.Sku_Setting[key][3][3]+" </td></tr>";
+            $("#display").append(temp);
+    }
+    },
+        error: function(response){
+            alert("No data Found");
+       }
+
+    });
+});
+
+</script>
+
+{% endblock custom_js %}
